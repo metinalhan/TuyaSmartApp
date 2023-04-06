@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="WpfApp.View.DeviceViews.SwitchDashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Width="150" Background="White">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Controls:ProgressRing x:Name="progress" Height="15" Width="15" HorizontalAlignment="Right"/>
+
+        <Border BorderThickness="1" BorderBrush="Orange">
+            <StackPanel x:Name="switchPanel" Orientation="Vertical">
+                <Label Name="lblName"  FontWeight="Bold" Margin="2"/>
+             
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

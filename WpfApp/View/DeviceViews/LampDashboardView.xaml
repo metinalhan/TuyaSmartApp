@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="WpfApp.View.DeviceViews.LampDashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Width="150" Background="White"> 
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Controls:ProgressRing x:Name="progress" Height="15" Width="15" HorizontalAlignment="Right"/>
+
+        <Border BorderThickness="1" BorderBrush="Orange">
+        <StackPanel Orientation="Vertical">
+                <Label Name="lblName"  FontWeight="Bold" Margin="2"/>
+                <Controls:ToggleSwitch    
+                    Margin="2"
+                    Name="tgSwitch"
+                    OffContent="Kapalı"
+                    OnContent="Açık"
+                    Toggled="ToggleSwitch_Toggled" />
+
+        </StackPanel>
+        </Border>
+
+        <GroupBox Header="Işık Şiddeti" Grid.Row="1">
+            <DockPanel VerticalAlignment="Center" Margin="10">
+                <TextBox  Text="{Binding ElementName=slBright, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Center" Width="40" IsEnabled="False" />
+                <Slider Thumb.DragCompleted="Slider_DragCompleted" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1" Name="slBright" />
+            </DockPanel>
+        </GroupBox>
+
+        <GroupBox Header="Sarı / Beyaz" Grid.Row="2">
+            <DockPanel VerticalAlignment="Center" Margin="10">
+                <TextBox Text="{Binding ElementName=slColorValue, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Center" Width="40" IsEnabled="False"/>
+                <Slider Thumb.DragCompleted="slColorValue_DragCompleted"  Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1" Name="slColorValue"/>
+            </DockPanel>
+        </GroupBox>
+
+    </Grid>
+</UserControl>

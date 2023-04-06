@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="WpfApp.View.DeviceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="Hesap Seçimi">
+                <ComboBox Name="cbAccount" Width="150" FontWeight="Bold" DisplayMemberPath="AccountName" SelectedValuePath="Id" VerticalContentAlignment="Center" SelectionChanged="cbAccount_SelectionChanged"/>
+            </GroupBox>
+
+            <Button Content="YENİ CİHAZ EKLE" Grid.Column="1" Width="150" HorizontalAlignment="Left" Background="LightGreen" Margin="5" Click="ShowGrid_Click" Padding="5" />
+
+        </Grid>
+
+        <Grid Name="gridGizle" Grid.Row="1" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+                
+            
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0">
+                <GroupBox.Header>
+                    <TextBlock Text="CİHAZ ADI" FontSize="15" FontWeight="Bold"/>
+                </GroupBox.Header>
+                <TextBox Name="tbDeviceName" Height="30" FontWeight="Bold" VerticalContentAlignment="Center" FontSize="15"/>
+            </GroupBox>
+
+            <GroupBox Grid.Row="1">
+                <GroupBox.Header>
+                    <TextBlock Text="DEVICE ID" FontSize="15" FontWeight="Bold"/>
+                </GroupBox.Header>
+                <TextBox Name="tbDeviceId" Height="30" FontWeight="Bold" VerticalContentAlignment="Center" FontSize="15"/>
+            </GroupBox>
+
+            <GroupBox Grid.Row="2" FontSize="15" >
+                <GroupBox.Header>
+                    <TextBlock Text="CİHAZ TÜRÜ" FontSize="15" FontWeight="Bold"/>
+                </GroupBox.Header>
+
+                <ComboBox Name="cbDeviceType" Width="200" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="15" />
+
+            </GroupBox>
+
+            <GroupBox Grid.Row="3" >
+                <GroupBox.Header>
+                    <TextBlock Text="SWITCH SAYISI" FontSize="15" FontWeight="Bold"/>
+                </GroupBox.Header>
+                <TextBox Text="0" Name="tbNumberOfSwitch" Height="30" FontWeight="Bold" VerticalContentAlignment="Center" FontSize="15"  PreviewKeyDown="SadeceRakamKeyDown"/>
+            </GroupBox>
+
+            <Button Content="KAYDET" Grid.Row="4" Width="80" HorizontalAlignment="Left" Background="LightGreen" FontWeight="Bold" Margin="5" Click="Save_ButtonClick" Padding="5" />
+            <Button Content="KAPAT" Grid.Row="4" Width="80" HorizontalAlignment="Right" Background="LightGreen" FontWeight="Bold" Margin="5" Click="HidGrid_Click" Padding="5" />
+
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <ListView Name="errorList" Background="Transparent">
+                    <ListView.Resources>
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Foreground" Value="Red"/>
+                        </Style>
+                    </ListView.Resources>
+                </ListView>
+            </Grid>
+
+        </Grid>
+
+        <ListView  Width="Auto" Name="lvList" Grid.Row="2" ItemsSource="{Binding}" SelectionMode="Single" Grid.Column="1" >
+          
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn Header="CİHAZ ADI" Width="150" DisplayMemberBinding="{Binding DeviceName}"/>
+                    <GridViewColumn Header="TÜRÜ" Width="100" DisplayMemberBinding="{Binding DeviceType}"/>
+                    <GridViewColumn Header="CİHAZ ID" Width="250" DisplayMemberBinding="{Binding DeviceTuyaId}"/>
+                    <GridViewColumn Header="VARSAYILAN" Width="100" DisplayMemberBinding="{Binding IsDefault}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+       
+        <Button Height="35" Grid.Row="4" Background="IndianRed" Margin="5" Content="Seçili Cihazı Sil" Click="DeleteDevice_Click"></Button>
+    </Grid>
+</UserControl>
+

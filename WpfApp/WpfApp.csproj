@@ -1,0 +1,85 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+	  <UseWindowsForms>true</UseWindowsForms>
+	  <ApplicationIcon>Resources\Bulb.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Avatars\logo.ico" />
+    <None Remove="Assets\Avatars\user.png" />
+    <None Remove="icons\delete.png" />
+    <None Remove="icons\exit.png" />
+    <None Remove="icons\home.png" />
+    <None Remove="icons\iot.png" />
+    <None Remove="icons\logo.ico" />
+    <None Remove="icons\menu_profile.png" />
+    <None Remove="icons\profile.png" />
+    <None Remove="icons\teslim.png" />
+    <None Remove="icons\tuya_account.png" />
+    <None Remove="Resources\Bulb.ico" />
+    <None Remove="Resources\bulb_off.ico" />
+    <None Remove="Resources\bulb_on.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="icons\delete.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\profile.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Resources\Bulb.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TuyaApp.Application\TuyaApp.Application.csproj" />
+    <ProjectReference Include="..\TuyaApp.Infrastructure\TuyaApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\TuyaApp.Persistence\TuyaApp.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Avatars\logo.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Avatars\user.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\exit.png" />
+    <Resource Include="icons\home.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\iot.png" />
+    <Resource Include="icons\logo.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\menu_profile.png" />
+    <Resource Include="icons\teslim.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\tuya_account.png" />
+    <Content Include="Resources\bulb_off.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\bulb_on.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
