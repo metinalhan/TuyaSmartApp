@@ -3,7 +3,6 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using TuyaApp.Domain.Common;
 using TuyaApp.Domain.Entities;
 using TuyaApp.Persistence.Extensions;
@@ -15,6 +14,11 @@ namespace TuyaApp.Persistence.Context
     {
         // Get the path to the directory where the executing assembly is located.
         string newpath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+        //public TuyaAppDbContext(DbContextOptions<TuyaAppDbContext> options)
+        //: base(options)
+        //{
+        //}
 
         // Override the OnConfiguring method to specify the SQLite database connection string.
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite($@"Data Source = {newpath}\database.db ");
