@@ -5,7 +5,7 @@ namespace TuyaApp.Infrastructure.Extensions
 {
     public static class ParseLoginResponse
     {
-        public static string TokenResponse(this IRestResponse response)
+        public static string TokenResponse(this RestResponse response)
         {
             var jObject = JObject.Parse(response.Content);
             var dataJson = JObject.Parse(jObject["result"]?.ToString());

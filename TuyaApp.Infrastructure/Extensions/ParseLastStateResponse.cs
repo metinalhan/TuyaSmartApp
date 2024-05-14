@@ -6,7 +6,7 @@ namespace TuyaApp.Infrastructure.Extensions
 {
     public static class ParseLastStateResponse
     {
-        public static RestResponseDto DeserializeResponse(this IRestResponse response) =>        
+        public static RestResponseDto DeserializeResponse(this RestResponse response) =>        
              JsonConvert.DeserializeObject<RestResponseDto>(response.Content);
         
     }

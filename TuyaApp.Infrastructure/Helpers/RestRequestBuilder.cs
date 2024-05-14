@@ -8,7 +8,7 @@ namespace TuyaApp.Infrastructure.Helpers
         public static RestRequest GetRestRequest(string clientId, string hash, string t, string token = null)
         {
             // Create a new RestRequest object with the GET HTTP method.
-            var request = new RestRequest(Method.GET);
+            var request = new RestRequest() { Method = Method.Get};
 
             // Add the client ID header to the request.
             request.AddHeader("client_id", clientId);
@@ -33,7 +33,7 @@ namespace TuyaApp.Infrastructure.Helpers
         public static RestRequest PostRestRequest(string clientId, string hash, string t,string token)
         {
             // Create a new RestRequest object with the POST HTTP method.
-            var request = new RestRequest(Method.POST);
+            var request = new RestRequest() { Method = Method.Post }; ;
 
             // Add the client ID, access token, sign, t, sign_method, and Content-Type headers to the request.
             request.AddHeader("client_id", clientId);
