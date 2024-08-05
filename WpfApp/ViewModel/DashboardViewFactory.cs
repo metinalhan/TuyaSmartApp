@@ -25,7 +25,9 @@ namespace WpfApp.ViewModel
             {
                 DeviceType.Switch => new SwitchDashboardView(device, _tuyaCloudService),
                 DeviceType.Socket => new SocketDashboardView(device,  _tuyaCloudService),
-                DeviceType.Lamp => new LampDashboardView(device, _tuyaCloudService)
+                DeviceType.Lamp => new LampDashboardView(device, _tuyaCloudService),
+                DeviceType.THSensor => new TempHumDashboardView(device, _tuyaCloudService),
+                DeviceType.ContactSensor => new ContactSensorDashboardView(device, _tuyaCloudService),
             };
         }
     }

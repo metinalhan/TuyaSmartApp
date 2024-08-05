@@ -25,14 +25,20 @@ namespace WpfApp.View
         private readonly ITuyaAccountService _accountService;
         private readonly IValidator<CreateDeviceDTO> _validator;
         private BindingList<string> errors;
+        private readonly ITuyaCloudService _tuyaCloudService;
 
-        public DeviceView(IDeviceService deviceService, ITuyaAccountService accountService, IValidator<CreateDeviceDTO> validator)
+        public DeviceView(
+            IDeviceService deviceService,
+            ITuyaAccountService accountService,
+            IValidator<CreateDeviceDTO> validator,
+            ITuyaCloudService tuyaCloudService)
         {
             InitializeComponent();
 
             _deviceService = deviceService;
             _accountService = accountService;
             _validator = validator;
+            _tuyaCloudService = tuyaCloudService;
 
             errors = new();
             errorList.ItemsSource = errors;
@@ -44,7 +50,7 @@ namespace WpfApp.View
         // Set the device type list for the combo box to all values of the DeviceType enum
         private void SetDeviceTypeList()
         {
-            cbDeviceType.ItemsSource = Enum.GetValues(typeof(DeviceType)).Cast<DeviceType>(); ;
+            cbDeviceType.ItemsSource = Enum.GetValues(typeof(DeviceType)).Cast<DeviceType>();
         }
 
         // Get all Tuya accounts asynchronously and set the first one that is marked as default as the selected item in the combo box
@@ -61,9 +67,14 @@ namespace WpfApp.View
         {
             var device = lvList.SelectedItem as DeviceDTO;
 
-            if (device is null) return;
+            if (device is null)
+                return;
 
-            MessageBoxResult result = MessageBox.Show("Seçili Cihaz Silinecek, Emin misin ?", "Cihaz Sil Onay", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show(
+                "Seçili Cihaz Silinecek, Emin misin ?",
+                "Cihaz Sil Onay",
+                MessageBoxButton.YesNo
+            );
 
             if (result == MessageBoxResult.Yes)
             {
@@ -73,20 +84,19 @@ namespace WpfApp.View
             await GetDevicesList();
         }
 
-
         // Add a new device with the specified account, device name, device type, device ID, and number of switches
         private async void Save_ButtonClick(object sender, RoutedEventArgs e)
         {
             var account = cbAccount.SelectedItem as TuyaAccount;
             var deviceType = cbDeviceType.SelectedItem;
-           
+
             string numberOfSwitch = tbNumberOfSwitch.Text;
 
             var newDevice = new CreateDeviceDTO
             {
                 DeviceName = tbDeviceName.Text,
                 DeviceTuyaId = tbDeviceId.Text,
-                NumberOfSwitch = numberOfSwitch.Equals("") ? -1: numberOfSwitch.ToInt32(),
+                NumberOfSwitch = numberOfSwitch.Equals("") ? -1 : numberOfSwitch.ToInt32(),
                 DeviceType = deviceType == null ? -1 : deviceType.ToInt32(),
                 TuyaAccount = account
             };
@@ -117,11 +127,13 @@ namespace WpfApp.View
         {
             gridGizle.Visibility = Visibility.Collapsed;
         }
+
         // Show the grid
         private void ShowGrid_Click(object sender, RoutedEventArgs e)
         {
             gridGizle.Visibility = Visibility.Visible;
         }
+
         // Get the list of devices for the newly selected account
         private async void cbAccount_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -143,6 +155,17 @@ namespace WpfApp.View
         private void SadeceRakamKeyDown(object sender, KeyEventArgs e)
         {
             e.Handled = JustNumericInputHelper.CanInput(e);
+        }
+
+        private async void GetDevicesFromTuyaAccount_Click(object sender, RoutedEventArgs e)
+        {
+            var account = cbAccount.SelectedItem as TuyaAccount;
+
+            var dialog = new TuyaDevicesView(account);
+
+            dialog.ShowDialog();
+
+            await GetDevicesList();
         }
     }
 }

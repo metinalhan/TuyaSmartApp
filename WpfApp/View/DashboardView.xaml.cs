@@ -164,6 +164,8 @@ namespace WpfApp.View
             var result = _dashboardViewFactory.CreateSmartDeviceView(device);
 
            await AddtoDash(device, result);
+
+            ShowHiddenAddDeviceToDash(sender, e);
         }
 
         //This method for getting positon of device that clicked orange border area
@@ -182,21 +184,28 @@ namespace WpfApp.View
         //This method for saving last information about position of device after release mouse button
         private void PreviewUp(object sender, MouseButtonEventArgs e)
         {
-            var thumb = e.Source as Border;
-            if (thumb == null)
-                return;
+            try
+            {
+                var thumb = e.Source as Border;
+                if (thumb == null)
+                    return;
 
-            var spanel = ((StackPanel)movingObject);
+                var spanel = ((StackPanel)movingObject);
 
-            var item = listofControls.FirstOrDefault(x => x.DeviceTuyaId.Equals(spanel.Tag.ToString()));
+                var item = listofControls.FirstOrDefault(x => x.DeviceTuyaId.Equals(spanel.Tag.ToString()));
 
-            double left = Canvas.GetLeft(spanel);
-            double top = Canvas.GetTop(spanel);
+                double left = Canvas.GetLeft(spanel);
+                double top = Canvas.GetTop(spanel);
 
-            item.PositionLeft = left;
-            item.PositionTop = top;
+                item.PositionLeft = left;
+                item.PositionTop = top;
 
-            movingObject = null;
+                movingObject = null;
+            }
+            catch (System.Exception)
+            {
+
+            }
         }
 
         //This method for change the device position on Dashboard

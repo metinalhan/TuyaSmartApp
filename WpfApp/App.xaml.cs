@@ -22,7 +22,7 @@ namespace WpfApp
     public partial class App : Application
     {
         public static IHost AppHost { get; private set; }
-      
+
         public App()
         {            
             AppHost = Host.CreateDefaultBuilder()
@@ -53,6 +53,7 @@ namespace WpfApp
             services.AddTransient<DashboardView>();
             services.AddTransient<DeviceView>();
             services.AddTransient<ProfileView>();
+            services.AddTransient<TuyaDevicesView>();
 
 
             services.AddSingleton<Func<MenuView>>(serviceProvider => serviceProvider.GetService<MenuView>);
@@ -60,7 +61,7 @@ namespace WpfApp
             services.AddSingleton<Func<DashboardView>>(serviceProvider => serviceProvider.GetService<DashboardView>);
             services.AddSingleton<Func<DeviceView>>(serviceProvider => serviceProvider.GetService<DeviceView>);
             services.AddSingleton<Func<ProfileView>>(serviceProvider => serviceProvider.GetService<ProfileView>);
-
+            services.AddSingleton<Func<TuyaDevicesView>>(serviceProvider => serviceProvider.GetService<TuyaDevicesView>);           
 
             services.AddPersistanceServices();
             services.AddInfrastructureServices();
@@ -72,7 +73,7 @@ namespace WpfApp
         }
 
         protected override async void OnStartup(StartupEventArgs e)
-        { 
+        {
 
             await AppHost.StartAsync();
 
@@ -80,7 +81,7 @@ namespace WpfApp
             startupForm.Show();
 
             base.OnStartup(e);
-        }      
+        }
 
 
         protected override async void OnExit(ExitEventArgs e)
