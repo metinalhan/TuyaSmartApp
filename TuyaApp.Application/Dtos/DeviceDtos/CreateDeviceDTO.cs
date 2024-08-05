@@ -8,6 +8,8 @@ namespace TuyaApp.Application.Dtos.DeviceDtos
         public string DeviceTuyaId { get; set; }
         public int NumberOfSwitch { get; set; }
         public int DeviceType { get; set; }
+        public string DeviceTypeName { get; set; }
         public TuyaAccount TuyaAccount { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

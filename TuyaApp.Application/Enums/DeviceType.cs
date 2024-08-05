@@ -1,9 +1,22 @@
-﻿namespace TuyaApp.Application.Enums
+﻿using System.ComponentModel;
+
+namespace TuyaApp.Application.Enums
 {
     public enum DeviceType
     {
+        [Description("Light")]
         Lamp,
+
+        [Description("Socket")]
         Socket,
-        Switch
+
+        [Description("Switch")]
+        Switch,
+
+        [Description("Temperature Humidity Sensor")]
+        THSensor,
+
+        [Description("Contact Sensor")]
+        ContactSensor
     }
 }

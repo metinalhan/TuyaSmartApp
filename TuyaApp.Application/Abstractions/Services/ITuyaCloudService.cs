@@ -11,9 +11,10 @@ namespace TuyaApp.Application.Abstractions.Services
         // Checks the last state of the specified switch on the specified device.
         // Task<bool> CheckLastStateAsync(Device device,string sw_number);
         Task<List<RestResultDto>> CheckLastStateAsync(Device device, string sw_number);
-              
+        Task<List<AllDevicesListResponseDto>> GetAllUserDevicesAsync(TuyaAccount tuyaAccount);
+
         // Executes a request to turn on or off the specified switch on the specified device.
-        Task<bool> ExecuteRequestAsync(Device device, string function , string action);
+        Task<bool> ExecuteRequestAsync(Device device, string function, string action);
 
         // Sets the icon for the switch based on its last state.
         void SetIcon(bool lastState);

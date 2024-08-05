@@ -1,8 +1,8 @@
-﻿using RestSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RestSharp;
 using TuyaApp.Application.Abstractions.Services;
 using TuyaApp.Application.Dtos;
 using TuyaApp.Domain.Entities;
@@ -42,6 +42,25 @@ namespace TuyaApp.Infrastructure.Concretes.Services
             return response.TokenResponse();
         }
 
+        private async Task<string> LoginWithDefaultTuyaAccountAsync(TuyaAccount tuyaAccount)
+        {
+            // Generate a timestamp and hash for the request
+            string t = DateTime.Now.MillisecondsTimestamp();
+            string hash = HashData.Hash(tuyaAccount.ClientId + t, tuyaAccount.Secret);
+
+            // Create a REST client and request using the generated hash
+            var options = new RestClientOptions(TuyaCloudEndpoint.TuyaCloudToken);
+            options.MaxTimeout = -1;
+            var client = new RestClient(options);
+            //client.Timeout = -1;
+            var request = RestRequestBuilder.GetRestRequest(tuyaAccount.ClientId, hash, t);
+
+            // Execute the request and return the access token from the response
+            var response = await client.ExecuteAsync(request);
+
+            return response.TokenResponse();
+        }
+
         // This method sends a request to the Tuya Cloud API to turn a device on or off
         public async Task<bool> ExecuteRequestAsync(Device device, string function, string action)
         {
@@ -51,17 +70,32 @@ namespace TuyaApp.Infrastructure.Concretes.Services
 
             // Generate a timestamp and hash for the request using the access token
             string t = DateTime.Now.MillisecondsTimestamp();
-            string hash = HashData.Hash(device.TuyaAccount.ClientId + token + t, device.TuyaAccount.Secret);
+            string hash = HashData.Hash(
+                device.TuyaAccount.ClientId + token + t,
+                device.TuyaAccount.Secret
+            );
 
             // Create a REST client and request using the generated hash and access token
-            var options = new RestClientOptions(TuyaCloudEndpoint.TuyaCloudDevice + device.DeviceTuyaId + "/commands");
+            var options = new RestClientOptions(
+                TuyaCloudEndpoint.TuyaCloudDevice + device.DeviceTuyaId + "/commands"
+            );
             options.MaxTimeout = -1;
             var client = new RestClient(options);
             //client.Timeout = -1;
-            var request = RestRequestBuilder.PostRestRequest(device.TuyaAccount.ClientId, hash, t, token);
+            var request = RestRequestBuilder.PostRestRequest(
+                device.TuyaAccount.ClientId,
+                hash,
+                t,
+                token
+            );
 
             // Create a JSON payload with the switch code and value
-            string jsonPayload = "{\n\t\"commands\":[\n\t\t{\n\t\t\t\"code\": \"" + function + "\",\n\t\t\t\"value\":" + action.ToLower() + "\n\t\t}\n\t]\n}";
+            string jsonPayload =
+                "{\n\t\"commands\":[\n\t\t{\n\t\t\t\"code\": \""
+                + function
+                + "\",\n\t\t\t\"value\":"
+                + action.ToLower()
+                + "\n\t\t}\n\t]\n}";
 
             // Add the JSON payload to the request object
             request.AddParameter("application/json", jsonPayload, ParameterType.RequestBody);
@@ -93,15 +127,25 @@ namespace TuyaApp.Infrastructure.Concretes.Services
 
             // Generates a hash for the request
             string t = DateTime.Now.MillisecondsTimestamp();
-            string hash = HashData.Hash(device.TuyaAccount.ClientId + token + t, device.TuyaAccount.Secret);
+            string hash = HashData.Hash(
+                device.TuyaAccount.ClientId + token + t,
+                device.TuyaAccount.Secret
+            );
 
             // Creates a REST client and request
-            var options = new RestClientOptions(TuyaCloudEndpoint.TuyaCloudDevice + device.DeviceTuyaId + "/status");
+            var options = new RestClientOptions(
+                TuyaCloudEndpoint.TuyaCloudDevice + device.DeviceTuyaId + "/status"
+            );
             options.MaxTimeout = -1;
             var client = new RestClient(options);
             //client.Timeout = -1;
 
-            var request = RestRequestBuilder.GetRestRequest(device.TuyaAccount.ClientId, hash, t, token);
+            var request = RestRequestBuilder.GetRestRequest(
+                device.TuyaAccount.ClientId,
+                hash,
+                t,
+                token
+            );
 
             // Executes the request and gets the response
             var response = await client.ExecuteAsync(request);
@@ -110,7 +154,32 @@ namespace TuyaApp.Infrastructure.Concretes.Services
             var myDeserializedClass = response.DeserializeResponse();
 
             return myDeserializedClass.Result;
+        }
 
+        public async Task<List<AllDevicesListResponseDto>> GetAllUserDevicesAsync(
+            TuyaAccount tuyaAccount
+        )
+        {
+            if (token is null)
+                token = await LoginWithDefaultTuyaAccountAsync(tuyaAccount);
+
+            string t = DateTime.Now.MillisecondsTimestamp();
+            string hash = HashData.Hash(tuyaAccount.ClientId + token + t, tuyaAccount.Secret);          
+
+            var options = new RestClientOptions(
+                TuyaCloudEndpoint.TuyaCloudDevices
+            );
+
+            options.MaxTimeout = -1;
+            var client = new RestClient(options);
+
+            var request = RestRequestBuilder.GetRestRequest(tuyaAccount.ClientId, hash, t, token);
+
+            var response = await client.ExecuteAsync(request);
+
+            var myDeserializedClass = response.DeserializeAllDevicesResponse();
+
+            return myDeserializedClass.Devices.UserDevicesResult;
         }
     }
 }

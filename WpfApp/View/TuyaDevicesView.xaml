@@ -1,0 +1,44 @@
+﻿<Window x:Class="WpfApp.View.TuyaDevicesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp.View"
+        Title="Tuya Devices" Height="400" Width="425" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>          
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>           
+        </Grid.RowDefinitions>
+        
+        <ListView  Width="Auto" Name="lvList" ItemsSource="{Binding}" 
+                   SelectionMode="Single">
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!--<GridViewColumn Header="CİHAZ ID" Width="160" DisplayMemberBinding="{Binding DeviceTuyaId}"/>-->                   
+                    <GridViewColumn Header="CİHAZ ADI" Width="150" DisplayMemberBinding="{Binding DeviceName}"/>
+                    <GridViewColumn Header="TÜRÜ" Width="200" DisplayMemberBinding="{Binding DeviceTypeName}"/>
+                    <!--<GridViewColumn Header="SWITCH" Width="60" DisplayMemberBinding="{Binding NumberOfSwitch}"/>-->
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Background="LightGreen" Content="Kaydet" Margin="5" VerticalAlignment="Bottom" Click="SaveButton_Click" />
+            <Button Grid.Column="1" Background="IndianRed" Content="İPTAL" Margin="5" VerticalAlignment="Bottom" Click="CancelButton_Click" />
+
+        </Grid>
+       
+    </Grid>
+</Window>
