@@ -26,7 +26,10 @@ namespace TuyaApp.Application.Consts
             new Category("cz", "Socket", DeviceType.Socket),
             new Category("kg", "Switch", DeviceType.Switch),
             new Category("wsdcg", "Temperature Humidity Sensor", DeviceType.THSensor),
-            new Category("mcs", "Contact Sensor", DeviceType.ContactSensor)
+            new Category("mcs", "Contact Sensor", DeviceType.ContactSensor),
+            new Category("pc", "Power Strip", DeviceType.Socket),
+            new Category("tdq", "Breaker", DeviceType.Switch),
+            new Category("wxkg", "Wireless Switch", DeviceType.WirelessSwitch),
         };
 
         public static DeviceType? GetCategoryByCode(string code)

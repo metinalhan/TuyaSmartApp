@@ -47,6 +47,14 @@ namespace WpfApp.View
             LoadAllDevices().GetAwaiter(); ;
         }
 
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _dashboardViewService.MoveMouseEvent -= MoveMouse;
+            _dashboardViewService.PreviewDownEvent -= PreviewDown;
+            _dashboardViewService.PreviewUpEvent -= PreviewUp;
+            _dashboardViewService.RemoveFromDashboardEvent -= RemoveFromDashboard_Click;
+        }
+
         //Set all devices into the combobox that define default account
         private async Task SetDeviceTypeList()
         {
@@ -112,7 +120,7 @@ namespace WpfApp.View
                 canvas.Children.Remove(child);
 
                 var item = listofControls.FirstOrDefault(x => x.DeviceTuyaId.Equals(device));
-
+                                
                 listofControls.Remove(item);
             }
         }             

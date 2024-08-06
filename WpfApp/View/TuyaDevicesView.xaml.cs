@@ -2,13 +2,14 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Security.Principal;
+using System.Text.RegularExpressions;
 using System.Windows;
 using TuyaApp.Application.Abstractions.Services;
 using TuyaApp.Application.Consts;
 using TuyaApp.Application.Dtos.DeviceDtos;
 using TuyaApp.Application.Extensions;
 using TuyaApp.Domain.Entities;
+using TuyaApp.Application.Enums;
 
 namespace WpfApp.View
 {
@@ -47,7 +48,14 @@ namespace WpfApp.View
                     continue;
 
                 var deviceType = CategoryCodes.GetCategoryByCode(device.Category);
-                var numberOfSwitch = device.DeviceSpecs.FindAll(f => f.Code.Contains("switch")).Count;
+                
+                var numberOfSwitch = device.DeviceSpecs?.FindAll(f => 
+                Regex.IsMatch(f.Code, @"^switch_\d+$") || 
+                Regex.IsMatch(f.Code, @"^switch\d+_value$") ||
+                Regex.IsMatch(f.Code, @"^switch_led$")).Count;
+
+                if (device.DeviceSpecs == null || deviceType == DeviceType.WirelessSwitch)
+                    continue;
 
                 var newDevice = new CreateDeviceDTO
                 {

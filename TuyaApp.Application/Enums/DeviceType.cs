@@ -17,6 +17,12 @@ namespace TuyaApp.Application.Enums
         THSensor,
 
         [Description("Contact Sensor")]
-        ContactSensor
+        ContactSensor,
+
+        [Description("Power Strip")]
+        PowerStrip,           
+
+        [Description("Wireless Switch")]
+        WirelessSwitch
     }
 }
