@@ -22,7 +22,7 @@
                            Margin="2" />
 
                 </StackPanel>
-                <GroupBox Header="VOLTAJ"
+                <GroupBox Header="VOLTAJ" Name="grpVolt"
                           Grid.Row="3">
                     <Label Name="lblVoltage"
                            HorizontalContentAlignment="Center"
@@ -30,7 +30,7 @@
                            FontWeight="Bold"
                            IsEnabled="False" />
                 </GroupBox>
-                <GroupBox Header="AKIM"
+                <GroupBox Header="AKIM" Name="grpCur"
                           Grid.Row="3">
                     <Label Name="lblCurrent"
                            HorizontalContentAlignment="Center"                           
@@ -38,7 +38,7 @@
                            FontWeight="Bold"
                            IsEnabled="False" />
                 </GroupBox>
-                <GroupBox Header="GÜÇ"
+                <GroupBox Header="GÜÇ" Name="grpPow"
                           Grid.Row="3">
                     <Label Name="lblPower"
                            HorizontalContentAlignment="Center"

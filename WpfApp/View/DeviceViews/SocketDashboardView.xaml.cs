@@ -18,7 +18,7 @@ namespace WpfApp.View.DeviceViews
     {
         private readonly Device _device;
         private readonly ITuyaCloudService _tuyaCloudService;
-       
+
         public SocketDashboardView(Device device, ITuyaCloudService tuyaCloudService)
         {
             InitializeComponent();
@@ -36,7 +36,7 @@ namespace WpfApp.View.DeviceViews
         private async Task LoadSockets()
         {
             int switchAmount = _device.NumberOfSwitch;
-                        
+
             ToggleSwitch switches;
 
             for (int i = 1; i <= switchAmount; i++)
@@ -52,7 +52,7 @@ namespace WpfApp.View.DeviceViews
                 switchPanel.Children.Add(switches);
             }
 
-            var result = await _tuyaCloudService.CheckLastStateAsync(_device,"");
+            var result = await _tuyaCloudService.CheckLastStateAsync(_device, "");
 
             foreach (var item in switchPanel.Children)
             {
@@ -72,15 +72,27 @@ namespace WpfApp.View.DeviceViews
                     else
                         tSwitch.IsOn = false;
                 }
-            }             
+            }
 
-            float current = result.Find(f => f.Code.Contains("current")).Value.ToFloat() / 1000;
-            float power = result.Find(f => f.Code.Contains("power")).Value.ToFloat() / 10;
-            float voltage = result.Find(f => f.Code.Contains("voltage")).Value.ToFloat() / 10;
+            var energy = result.Find(f => f.Code.Contains("current"));
 
-            lblCurrent.Content = current + " A";
-            lblVoltage.Content = voltage + " V";
-            lblPower.Content = power + " W";
+            if (energy != null)
+            {
+                float current = energy.Value.ToFloat() / 1000;
+                float power = result.Find(f => f.Code.Contains("power")).Value.ToFloat() / 10;
+                float voltage = result.Find(f => f.Code.Contains("voltage")).Value.ToFloat() / 10;
+
+                lblCurrent.Content = current + " A";
+                lblVoltage.Content = voltage + " V";
+                lblPower.Content = power + " W";
+            }
+            else
+            {
+                grpCur.Visibility = Visibility.Collapsed;
+                grpPow.Visibility = Visibility.Collapsed;
+                grpVolt.Visibility = Visibility.Collapsed;
+            }
+
 
             progress.Visibility = Visibility.Collapsed;
         }
@@ -95,7 +107,7 @@ namespace WpfApp.View.DeviceViews
             {
                 if (toggleSwitch.IsOn == true)
                 {
-                    await _tuyaCloudService.ExecuteRequestAsync(_device, SocketSmartDeviceConst.Switch+ tag.ToString(), "true");
+                    await _tuyaCloudService.ExecuteRequestAsync(_device, SocketSmartDeviceConst.Switch + tag.ToString(), "true");
                 }
                 else
                 {
