@@ -156,6 +156,35 @@ namespace TuyaApp.Infrastructure.Concretes.Services
             return myDeserializedClass.Result;
         }
 
+        public async Task<RestDeviceDetailsResultDto> GetDeviceDetails(Device device)
+        {
+            if (token is null)
+                token = await LoginAsync(device);
+
+            string t = DateTime.Now.MillisecondsTimestamp();
+            string hash = HashData.Hash(
+                device.TuyaAccount.ClientId + token + t,
+                device.TuyaAccount.Secret
+            );
+
+            var options = new RestClientOptions(
+               TuyaCloudEndpoint.TuyaCloudDevice + device.DeviceTuyaId
+           );
+            options.MaxTimeout = -1;
+            var client = new RestClient(options);
+
+            var request = RestRequestBuilder.GetRestRequest(
+               device.TuyaAccount.ClientId,
+               hash,
+               t,
+               token
+           );
+
+            var response = await client.ExecuteAsync(request);
+            var myDeserializedClass = response.DeserializeDeviceDetailsResponse();
+            return myDeserializedClass.Result;
+        }
+
         public async Task<List<AllDevicesListResponseDto>> GetAllUserDevicesAsync(
             TuyaAccount tuyaAccount
         )
@@ -181,5 +210,7 @@ namespace TuyaApp.Infrastructure.Concretes.Services
 
             return myDeserializedClass.Devices.UserDevicesResult;
         }
+
+       
     }
 }

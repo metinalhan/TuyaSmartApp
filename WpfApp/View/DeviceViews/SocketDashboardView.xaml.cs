@@ -1,4 +1,6 @@
 ﻿using MahApps.Metro.Controls;
+using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,7 +36,7 @@ namespace WpfApp.View.DeviceViews
         private async Task LoadSockets()
         {
             int switchAmount = _device.NumberOfSwitch;
-
+                        
             ToggleSwitch switches;
 
             for (int i = 1; i <= switchAmount; i++)
@@ -50,6 +52,8 @@ namespace WpfApp.View.DeviceViews
                 switchPanel.Children.Add(switches);
             }
 
+            var result = await _tuyaCloudService.CheckLastStateAsync(_device,"");
+
             foreach (var item in switchPanel.Children)
             {
                 var itemType = item.GetType();
@@ -58,7 +62,7 @@ namespace WpfApp.View.DeviceViews
                 if (name.Equals(nameof(ToggleSwitch)))
                 {
                     var tSwitch = item as ToggleSwitch;
-                    var result = await _tuyaCloudService.CheckLastStateAsync(_device, tSwitch.Tag.ToString());
+                    //var result = await _tuyaCloudService.CheckLastStateAsync(_device, tSwitch.Tag.ToString());
 
                     int port = tSwitch.Tag.ToString().GetPort();
                     bool lastStatus = (bool)result[port].Value;
@@ -68,8 +72,15 @@ namespace WpfApp.View.DeviceViews
                     else
                         tSwitch.IsOn = false;
                 }
+            }             
 
-            }
+            float current = result.Find(f => f.Code.Contains("current")).Value.ToFloat() / 1000;
+            float power = result.Find(f => f.Code.Contains("power")).Value.ToFloat() / 10;
+            float voltage = result.Find(f => f.Code.Contains("voltage")).Value.ToFloat() / 10;
+
+            lblCurrent.Content = current + " A";
+            lblVoltage.Content = voltage + " V";
+            lblPower.Content = power + " W";
 
             progress.Visibility = Visibility.Collapsed;
         }

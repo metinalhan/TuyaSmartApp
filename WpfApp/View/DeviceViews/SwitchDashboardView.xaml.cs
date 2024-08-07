@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -50,6 +51,8 @@ namespace WpfApp.View.DeviceViews
                 switchPanel.Children.Add(switches);
             }
 
+            var result = await _tuyaCloudService.CheckLastStateAsync(_device, "");
+
             foreach (var item in switchPanel.Children)
             {
                 var itemType = item.GetType();
@@ -57,10 +60,9 @@ namespace WpfApp.View.DeviceViews
 
                 if (name.Equals(nameof(ToggleSwitch)))
                 {
-                    var tSwitch = item as ToggleSwitch;
-                    //bool lastStatus = await _tuyaCloudService.CheckLastStateAsync(_device, tSwitch.Tag.ToString()); 
+                    var tSwitch = item as ToggleSwitch;              
                     
-                    var result = await _tuyaCloudService.CheckLastStateAsync(_device, tSwitch.Tag.ToString());
+                    //var result = await _tuyaCloudService.CheckLastStateAsync(_device, tSwitch.Tag.ToString());
                     int port = tSwitch.Tag.ToString().GetPort();
                     bool lastStatus = (bool)result[port].Value;
 

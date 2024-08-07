@@ -14,8 +14,38 @@
         <Controls:ProgressRing x:Name="progress" Height="15" Width="15" HorizontalAlignment="Right"/>
 
         <Border BorderThickness="1" BorderBrush="Orange">
-            <StackPanel x:Name="switchPanel" Orientation="Vertical">
-                <Label Name="lblName"  FontWeight="Bold" Margin="2"/>
+            <StackPanel>
+                <StackPanel x:Name="switchPanel"
+                            Orientation="Vertical">
+                    <Label Name="lblName"
+                           FontWeight="Bold"
+                           Margin="2" />
+
+                </StackPanel>
+                <GroupBox Header="VOLTAJ"
+                          Grid.Row="3">
+                    <Label Name="lblVoltage"
+                           HorizontalContentAlignment="Center"
+                           FontSize="12"
+                           FontWeight="Bold"
+                           IsEnabled="False" />
+                </GroupBox>
+                <GroupBox Header="AKIM"
+                          Grid.Row="3">
+                    <Label Name="lblCurrent"
+                           HorizontalContentAlignment="Center"                           
+                           FontSize="12"
+                           FontWeight="Bold"
+                           IsEnabled="False" />
+                </GroupBox>
+                <GroupBox Header="GÜÇ"
+                          Grid.Row="3">
+                    <Label Name="lblPower"
+                           HorizontalContentAlignment="Center"
+                           FontSize="12"
+                           FontWeight="Bold"
+                           IsEnabled="False" />
+                </GroupBox>
                
             </StackPanel>
         </Border>
