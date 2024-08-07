@@ -12,6 +12,7 @@ namespace TuyaApp.Application.Abstractions.Services
         // Task<bool> CheckLastStateAsync(Device device,string sw_number);
         Task<List<RestResultDto>> CheckLastStateAsync(Device device, string sw_number);
         Task<List<AllDevicesListResponseDto>> GetAllUserDevicesAsync(TuyaAccount tuyaAccount);
+        Task<RestDeviceDetailsResultDto> GetDeviceDetails(Device device);
 
         // Executes a request to turn on or off the specified switch on the specified device.
         Task<bool> ExecuteRequestAsync(Device device, string function, string action);

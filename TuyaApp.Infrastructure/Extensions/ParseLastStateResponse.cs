@@ -12,5 +12,8 @@ namespace TuyaApp.Infrastructure.Extensions
         public static AllDevicesRestResponseDto DeserializeAllDevicesResponse(
             this RestResponse response
         ) => JsonConvert.DeserializeObject<AllDevicesRestResponseDto>(response.Content);
+
+        public static RestDeviceDetailsResponseDto DeserializeDeviceDetailsResponse(this RestResponse response) =>
+           JsonConvert.DeserializeObject<RestDeviceDetailsResponseDto>(response.Content);
     }
 }

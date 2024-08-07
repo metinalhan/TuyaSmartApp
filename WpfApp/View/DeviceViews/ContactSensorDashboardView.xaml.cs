@@ -39,6 +39,11 @@ namespace WpfApp.View.DeviceViews
             bool lastState = (bool)result[ContactSensor.Status.ToInt32()].Value;
             int batt = result[ContactSensor.Battery.ToInt32()].Value.ToInt32();
 
+            var devicedetails = await _tuyaCloudService.GetDeviceDetails(_device);
+            var lastActivity = devicedetails.UpdateTime.FromUnixTimestamp();
+
+            lblLastTime.Content = lastActivity.ToString("dd/MM/yyyy HH:mm"); ;
+
             //lblSensor.Content = lastState;
             if (lastState)
                 tgSwitch.IsOn = true;
