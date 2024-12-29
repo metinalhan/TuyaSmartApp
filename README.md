@@ -58,10 +58,11 @@ dotnet run
 
 Contributions are welcome! 🎉
 
-1. Fork
-2. Create Feat_xxx branch
-3. Commit
-4. Create Pull Request
+1. Fork the repository
+2. Create a new branch (git checkout -b feature-branch)
+3. Make your changes and commit them (git commit -m 'Add new feature')
+4. Push your changes to the branch (git push origin feature-branch)
+5. Create Pull Request
 
 
 ## Contact
