@@ -6,7 +6,6 @@ You need to grant the permissions mentioned below for your projects in your Tuya
 - Smart Home Basic Service
 
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)  
 **TuyaSmartApp** is a smart home application built on the Tuya platform. It allows users to control and manage Tuya-supported devices effortlessly.
 
 ---
@@ -49,29 +48,27 @@ dotnet restore
 dotnet run
 ```
 
-Usage
-Log in with your Tuya account.
-Add new devices or manage existing ones.
-Control your devices and set up automation rules.
+## Usage
+- Log in with your Tuya account.
+- Add new devices or manage existing ones.
+- Control your devices and set up automation rules.
 
-Contributing
+
+## Contribution
+
 Contributions are welcome! 🎉
-To contribute, follow these steps:
 
-Fork the repository.
-Create a new branch (git checkout -b feature-branch).
-Make your changes and commit them (git commit -m 'Add new feature').
-Push your changes to the branch (git push origin feature-branch).
-Open a pull request.
+1. Fork
+2. Create Feat_xxx branch
+3. Commit
+4. Create Pull Request
 
-License
-This project is licensed under the MIT License.
 
-Contact
+## Contact
 For any questions or suggestions, feel free to reach out:
 Metin Alhan
 
-GitHub: metinalhan
-Email: metinalhan@gmail.com
+- GitHub: metinalhan
+- Email: metinalhan@gmail.com
 
 
