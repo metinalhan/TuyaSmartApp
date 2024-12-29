@@ -38,24 +38,13 @@ git clone https://github.com/metinalhan/TuyaSmartApp.git
 cd TuyaSmartApp
 ```
 
-3. **Install Dependencies**
+2. **Install Dependencies**
 Restore the required NuGet packages:
 ```
 dotnet restore
 ```
 
-4. **Set Up API Keys**
-Open the appsettings.json file and add your Tuya API keys in the following format:
-```json
-{
-    "TuyaApi": {
-        "ClientId": "YOUR_CLIENT_ID",
-        "ClientSecret": "YOUR_CLIENT_SECRET"
-    }
-}
-```
-
-6. **Run the Project**
+3. **Run the Project**
 ```
 dotnet run
 ```
